@@ -6,7 +6,7 @@ TEST_NAME := vector matrix factorize_lu
 ##
 ## 	DEFAULT BUILD
 ##  --> help
-## 
+##
 
 help :
 	@echo "Available:"
@@ -18,7 +18,7 @@ help :
 
 ##
 ## 	COMPILATION
-## 
+##
 
 
 # Compiler
@@ -31,19 +31,19 @@ CPP_FLAGS := --std=c++98 -Wall -Wextra -pedantic -ggdb -Wno-unused-parameter -Wn
 
 
 test_vector : test_vector.o vector.o
-	$(C_CPP) $(CPP_FLAGS) -o $@ $^	
+	$(C_CPP) $(CPP_FLAGS) -o $@ $^
 
 test_matrix : test_matrix.o vector.o matrix.o
-	$(C_CPP) $(CPP_FLAGS) -o $@ $^	
+	$(C_CPP) $(CPP_FLAGS) -o $@ $^
 
 test_factorize_lu : test_factorize_lu.o vector.o matrix.o factorize_lu.o
-	$(C_CPP) $(CPP_FLAGS) -o $@ $^	
+	$(C_CPP) $(CPP_FLAGS) -o $@ $^
 
 test_%.o : test_%.cpp %.hpp
-	$(C_CPP) $(CPP_FLAGS) -o $@ -c $< 
+	$(C_CPP) $(CPP_FLAGS) -o $@ -c $<
 
 %.o : %.cpp %.hpp
-	$(C_CPP) $(CPP_FLAGS) -o $@ -c $< 
+	$(C_CPP) $(CPP_FLAGS) -o $@ -c $<
 
 clean:
 	rm *.o
@@ -100,8 +100,8 @@ m_v : m_vector
 m_m : m_matrix
 m_f : m_factorize_lu
 
-# WARNING 
-# might be an extra (depending on the g++ version) 
+# WARNING
+# might be an extra (depending on the g++ version)
 # 72,704 bytes in 1 blocks are still reachable in loss record 1 of 1
 # due to library std
 
@@ -137,5 +137,3 @@ TGZ_FILES :=  *.c *.h ?akefile cr.pdf
 pack :
 	[ -e cr.pdf ] || echo > cr.pdf
 	cd .. ; tar czf $(TDM_DIR)/$(TDM_DIR).tgz $(TGZ_FILES:%=$(TDM_DIR)/%)
-
-

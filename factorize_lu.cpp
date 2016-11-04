@@ -1,10 +1,6 @@
-# include "factorize_lu.hpp"
+#include "factorize_lu.hpp"
 
-# undef NDEBUG
-# include <assert.h>
+#undef NDEBUG
+#include <assert.h>
 
-
-void factorize_lu ( Matrix & m ) { 
-}
-
-
+void factorize_lu(Matrix &m) {}
