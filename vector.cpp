@@ -17,9 +17,9 @@ using namespace std;
     }                                                                          \
   }
 
-Vector::Vector(const Vector &v) {}
+Vector::Vector(const Vector &v) { COPY_VECT(*this, v); }
 
-Vector::~Vector() {}
+Vector::~Vector() { delete[] element; }
 
 void Vector::init_alea() {
   for (unsigned int i = 0; i < size; i++) {
@@ -27,24 +27,71 @@ void Vector::init_alea() {
   }
 }
 
-float &Vector::operator[](unsigned int const i) { return (*(float *)NULL); }
+float &Vector::operator[](unsigned int const i) { return element[i]; }
 
 float const &Vector::operator[](unsigned int const i) const {
-  return (*(float *)NULL);
+  return element[i];
 }
 
-std::ostream &operator<<(std::ostream &ost, Vector const &v) { return ost; }
+std::ostream &operator<<(std::ostream &ost, Vector const &v) {
+  ost << '(';
+  for (unsigned int i = 0; i < v.size; i++) {
+    if (i > 0) {
+      ost << ',';
+    }
+    ost << v.element[i];
+  }
+  ost << ')' << endl;
+  return ost;
+}
 
-Vector &Vector::operator=(Vector const &v) { return (*this); }
+Vector &Vector::operator=(Vector const &v) {
+  COPY_VECT(*this, v);
+  return *this;
+}
 
-Vector Vector::operator+(Vector const &v) const { return v; }
+Vector Vector::operator+(Vector const &v) const {
+  assert(size == v.size);
+  Vector n = Vector(size);
+  for (unsigned int i = 0; i < size; i++) {
+    n.element[i] = element[i] + v.element[i];
+  }
+  return n;
+}
 
-Vector Vector::operator-(Vector const &v) const { return v; }
+Vector Vector::operator-(Vector const &v) const {
+  assert(size == v.size);
+  Vector n = Vector(size);
+  for (unsigned int i = 0; i < size; i++) {
+    n.element[i] = element[i] - v.element[i];
+  }
+  return n;
+}
 
-Vector Vector::operator*(float const a) const { return *(Vector *)NULL; }
+Vector Vector::operator*(float const a) const {
+  Vector n = Vector(size);
+  for (unsigned int i = 0; i < size; i++) {
+    n.element[i] = element[i] * a;
+  }
+  return n;
+}
 
-float Vector::operator|(Vector const &v) const { return 0; }
+float Vector::operator|(Vector const &v) const {
+  assert(size == v.size);
+  int sum = 0;
+  for (unsigned int i = 0; i < size; i++) {
+    sum += element[i] * v.element[i];
+  }
+  return sum;
+}
 
-bool Vector::operator==(Vector const &v) const { return false; }
+bool Vector::operator==(Vector const &v) const {
+  assert(size == v.size);
+  bool is_equal = true;
+  for (unsigned int i = 0; i < size && is_equal; i++) {
+    is_equal = (element[i] == v.element[i]);
+  }
+  return is_equal;
+}
 
-Vector operator*(float const a, Vector const &v) { return v; }
+Vector operator*(float const a, Vector const &v) { return v * a; }
